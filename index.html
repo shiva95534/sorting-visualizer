@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
+    <!-- <script src="js_files/sorting.js"></script> -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Visualizer</title>
+    
+</head>
+<body class="p-3 bg-dark">
+    <!-- <div> -->
+
+        <!-- heading -->
+        <h2 style="text-align: center;" class="text-light mb-3">Sorting Visualizer</h2>
+
+        <!-- navbar -->
+        <ul class="nav">
+            <li class="nav nav-item me-auto">
+                <button id = "newarray" onclick="makeArray()" class="m-2 p-2  btn btn-outline-info">New Array</button>
+                    <span> <h4 style="color: #BCE954;display: inline-flex;margin-top: 10px; margin-right: 12px;">Array Size : </h4><input id = "arr_sz" class = "mt-3" type="range" value="50" min="1" max="100" onchange = "makeArray()" oninput="this.nextElementSibling.value = this.value">
+                        <output class="text-info">50</output></span>
+                <!-- <span ><input type="range" class="mt-3 bg-primary text-info" id="arr_sz" min = "1" max = "100" placeholder = "50" step = "1" value = "50" oninput="rangeValue.innerText = this.value"><p id = "rangeValue" class="bg-dark text-info"></p></span> -->
+            </li>
+            <ul class="nav">
+                <li class="nav-item mx-auto">
+                    <button id = "bubblesort" onclick="bblSort()" class="m-2 p-2 bubblesort btn btn-outline-primary">Bubble Sort</button>
+                </li>
+                <li class="nav-item mx-auto">
+                    <button id = "insertionsort" onclick="insertionsort()" class="m-2 p-2 insertionsort btn btn-outline-primary">Insertion Sort</button>
+                </li>
+                <li class="nav-item mx-auto">
+                    <button id = "selectionsort" onclick="selectionsort()" class="m-2 p-2 selectionsort btn btn-outline-primary">Selection Sort</button>
+                </li>
+                <!-- <li class="nav-item mx-auto">
+                    <button id = "mergesort" onclick="mergesort()" class="m-2 p-2 mergesort btn btn-outline-primary">Merge Sort</button>
+                </li>
+                <li class="nav-item mx-auto">
+                    <button id = "quicksort" onclick="quicksort()" class="m-2 p-2 quicksort btn btn-outline-primary">Quick Sort</button>
+                </li> -->
+            </ul>
+        </ul>
+
+        <!-- bars -->
+        <!-- " -->
+        <div id="bars" class="mt-2 p-2 mx-auto" style="height: 500px;justify-content: center;align-items: center;max-width: fit-content;" >
+        </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    
+    <script>
+
+        async function  bblSort(){  
+            console.log("bubble sort called")
+            for (var i = 0; i < arr.length; i++){
+                // console.log("arr : ",arr)
+                for (var j = 0; j < (arr.length - i - 1); j++){
+                    // selecting bars
+                    let classname = await "bar" + (j+1).toString();
+                    const e1 = await document.querySelector(`#bars .${classname}`); 
+                    // console.log(classname)
+                    classname =await  "bar"+(j+2).toString();
+                    const e2 = await document.querySelector(`#bars .${classname}`);
+                    // styling selected bars
+                    // console.log();
+                     e1.style.backgroundColor = await "red" 
+                     e2.style.backgroundColor = await "red" 
+                    // compparing two bars
+                    if (arr[j] > arr[j + 1]) {
+                        const s1 =await window.getComputedStyle(e1);
+                        const s2 =await window.getComputedStyle(e2);
+                        const t1 =await s1.getPropertyValue("height");
+                        const t2 =await s2.getPropertyValue("height");
+                        // bars swaping
+                        e1.style.height =await t2;
+                        e2.style.height =await t1;
+                        // array swaping
+                        var temp = arr[j]
+                        arr[j] = arr[j + 1]
+                        arr[j + 1] = temp   
+                    } 
+                // delay
+                await delay(800);
+                e1.style.backgroundColor = await "yellowgreen"; 
+                e2.style.backgroundColor = await "yellowgreen";
+                }
+            }
+        }
+
+
+        // selection sort 
+        async function selectionsort(){
+            for (let i = 0; i < arr.length - 1; i++) {
+                // Find the minimum element in the unsorted part of the array
+                let minIndex = i; 
+                let classname = await "bar" + (i+1).toString();
+
+                const e1 = await document.querySelector(`#bars .${classname}`); 
+                e1.style.backgroundColor = await "red"; 
+
+                for (let j = i + 1; j < arr.length; j++){
+                    classname =await  "bar"+(j+1).toString();
+                    const e2 = await document.querySelector(`#bars .${classname}`);
+                    e2.style.backgroundColor = await "red"; 
+                    if (arr[j] < arr[minIndex]) {
+                        minIndex = j;
+                    }
+                    await delay(800);
+                    e2.style.backgroundColor = "yellowgreen"
+                }
+                // Swap the found minimum element with the first element
+                if (minIndex != i){
+                    classname = await "bar" + (minIndex + 1).toString();
+                    const e = await document.querySelector(`#bars .${classname}`)
+                    const s1 =await window.getComputedStyle(e1);
+                    const s2 =await window.getComputedStyle(e);
+
+                    const t1 =await s1.getPropertyValue("height");
+                    const t2 =await s2.getPropertyValue("height");
+
+                    // bars swaping
+                    e1.style.height =await t2;
+                    e.style.height =await t1;
+
+                    let temp = arr[i];
+                    arr[i] = arr[minIndex];
+                    arr[minIndex] = temp;
+                }
+                console.log(arr)
+                e1.style.backgroundColor = "yellowgreen"
+            }
+        }
+
+        async function insertionsort(){
+            // console.log(arr)
+            for (let i = 1; i < arr.length; i++){
+                console.log("iteration : ",arr);
+                let key = arr[i];
+                let j = i - 1;
+                // bars
+                var class1 = await "bar" + (i+1).toString();
+                const e1 = document.querySelector(`#bars .${class1}`);
+                e1.style.backgroundColor = "red";
+
+                var class2 = await "bar" + (j+1).toString();
+                const e2 = document.querySelector(`#bars .${class2}`);
+                e2.style.backgroundColor = "red";
+
+                // Move elements of arr[0..i-1], that are greater than key, to one position ahead of their current position
+                while(j >= 0 && arr[j] > key){
+                    class1 = await "bar" + (j+2).toString();
+                    const e1 = document.querySelector(`#bars .${class1}`);
+                    e1.style.backgroundColor = "red";
+                    class2 = await "bar" + (j+1).toString();
+                    const e2 = document.querySelector(`#bars .${class2}`);
+                    e2.style.backgroundColor = "red";
+                    const s1 =await window.getComputedStyle(e1);
+                    const s2 =await window.getComputedStyle(e2);
+                    const t1 =await s1.getPropertyValue("height");
+                    const t2 =await s2.getPropertyValue("height");
+                    e1.style.height =await t2;
+                    e2.style.height =await t1;
+                    await delay(800);
+                    temp = arr[j+1];
+                    arr[j + 1] = arr[j];
+                    arr[j] = key;
+                    j = j - 1;
+                    console.log(arr)
+                    e1.style.backgroundColor = "yellowgreen"
+                    e2.style.backgroundColor = "yellowgreen"
+                }
+                // arr[j + 1] = key;
+                e1.style.backgroundColor = "yellowgreen"
+                e2.style.backgroundColor = "yellowgreen"
+            } 
+            console.log(arr)
+        }
+
+        function delay(ms){
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+    async function makeBars(n){
+        for(let i = 0;i < n; i++){
+            // tag creation
+            const tag = document.createElement("p");
+            const text = document.createTextNode(`${arr[i]}`);
+            tag.appendChild(text)
+            
+            // adding classname to tag
+            let classname = "bar" + (i+1).toString();
+            tag.className = classname
+            
+            // adding style attribute
+            let cssStyle = `height:${arr[i]}%;`;
+            tag.setAttribute("style",cssStyle);
+
+            // adding to bars(div)
+            const element = document.getElementById("bars");
+            element.appendChild(tag)
+        }
+    }
+
+    async function removeBars(){
+        // document.getElementById('remove-button').addEventListener('click', function() {
+            const barsDiv = document.getElementById('bars');
+            while (barsDiv.firstChild) {
+                await barsDiv.removeChild(barsDiv.firstChild);
+            }
+        // });
+    }
+
+    async function makeArray(){
+        await removeBars();
+        // await $("#bars > p").remove();
+        var n = document.querySelector("#arr_sz").value;
+        arr = []
+        for(var i = 0;i < n; i++){
+            arr.push(Math.ceil(Math.random() * 101));
+        }
+        makeBars(n);
+    }
+
+    arr = []
+    makeArray();
+
+    </script> 
+    <!-- <script src="js_files/bubblesort.js"></script>  -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
+</body>
+</html>

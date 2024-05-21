@@ -1,0 +1,30 @@
+p{
+    display: inline-flex;
+    background-color: yellowgreen;
+    width: 10px;
+    margin-left: 3px;
+    font-size: 0%;
+    color: yellowgreen;
+};
+
+span{
+    color: blue
+};
+
+
+/* #bars{
+    height: 500px;
+    /* background-color: blueviolet; */
+    /* display: flex;
+    max-width: fit-content;
+    justify-content: center; */
+    /* align-content: center; */
+    /* align-items: center; */
+    /* height: 100vh; */
+
+
+
+
+/* #arr_sz{
+    color: blue;
+}; */
